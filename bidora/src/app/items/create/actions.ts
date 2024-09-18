@@ -25,6 +25,7 @@ export async function createItemAction(formData: FormData) {
   await database.insert(itemsSchema).values({
     name: formData.get("name") as string,
     startingPrice: priceAsCents,
+    currentBid: priceAsCents,
     userId: user?.id,
   });
 
