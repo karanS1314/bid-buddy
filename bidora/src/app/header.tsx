@@ -15,13 +15,19 @@ export async function Header() {
             BidBuddy.com
           </Link>
 
-          <div>
-            {" "}
+          <div className="flex items-center gap-8">
             <Link
               href="/items/create"
               className="hover:underline flex items-center gap-1"
             >
-              Auction an Item
+              Create Auction
+            </Link>
+
+            <Link
+              href="/auctions"
+              className="hover:underline flex items-center gap-1"
+            >
+              My Auctions
             </Link>
           </div>
         </div>

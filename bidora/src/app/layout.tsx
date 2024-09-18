@@ -28,7 +28,7 @@ export default function RootLayout({
         )}
       >
         <Header />
-        {children}
+        <div className="container mt-12">{children}</div>
         {/* <SessionProvider>
           <AppKnockProviders>
             <Header />
