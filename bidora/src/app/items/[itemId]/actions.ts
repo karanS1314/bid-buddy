@@ -5,6 +5,10 @@ import { database } from "@/db/database";
 import { bids, items } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { Knock } from "@knocklabs/node";
+import { env } from "@/env";
+
+const knock = new Knock(env.KNOCK_SECRET_KEY);
 
 export async function createBidAction(itemId: number) {
   const session = await auth();
@@ -38,6 +42,51 @@ export async function createBidAction(itemId: number) {
       currentBid: latestBidValue,
     })
     .where(eq(items.id, itemId));
+
+  const currentBids = await database.query.bids.findMany({
+    where: eq(bids.itemId, itemId),
+    with: {
+      user: true,
+    },
+  });
+
+  const recipients: {
+    id: string;
+    name: string;
+    email: string;
+  }[] = [];
+
+  for (const bid of currentBids) {
+    if (
+      bid.userId != userId &&
+      !recipients.find((recipient) => recipient.id === bid.userId)
+    ) {
+      //userId is the current logged in user here
+      recipients.push({
+        id: bid.userId + "",
+        name: bid.user.name ?? "Anonymous",
+        email: bid.user.email,
+      });
+    }
+  }
+  if (recipients.length > 0) {
+    await knock.workflows.trigger("user-placed-bid", {
+      actor: {
+        id: userId,
+        name: session.user.name ?? "Anonymous",
+        email: session.user.email,
+        collection: "users",
+      },
+      recipients,
+      data: {
+        itemId,
+        bidAmount: latestBidValue,
+        itemName: item.name,
+      },
+    });
+  }
+
+  // send notifications to everyone else on this item who has placed a bid
 
   revalidatePath(`/items/${item.id}`);
 }
