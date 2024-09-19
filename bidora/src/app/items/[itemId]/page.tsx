@@ -8,6 +8,7 @@ import { createBidAction } from "./actions";
 import { getItem } from "@/data-access/items";
 import { getBidsForItem } from "@/data-access/bids";
 import { auth } from "@/auth";
+import { Badge } from "@/components/ui/badge";
 
 function formatTimestamp(timestamp: Date) {
   return formatDistance(timestamp, new Date(), { addSuffix: true });
@@ -18,7 +19,6 @@ export default async function ItemPage({
   params: { itemId: string };
 }) {
   const session = await auth();
-  const userId = session?.user?.id;
 
   const item = await getItem(parseInt(itemId));
 
@@ -42,7 +42,10 @@ export default async function ItemPage({
 
   const hasBids = allBids.length > 0;
 
-  const canPlaceBid = session && item.userId !== session.user.id;
+  const isBiddingOver = item.endDate < new Date();
+
+  const canPlaceBid =
+    session && item.userId !== session.user.id && !isBiddingOver;
 
   return (
     <main className="space-y-8">
@@ -52,6 +55,20 @@ export default async function ItemPage({
             <span className="font-normal">Auction for </span>
             {item?.name}
           </h1>
+          {isBiddingOver && (
+            <>
+              <Badge className="w-fit" variant="destructive">
+                Bidding Over
+              </Badge>
+              <div>
+                Sold for{" "}
+                <span className="font-bold">
+                  ${formatToDollar(item.currentBid)}
+                </span>{" "}
+                to {allBids[allBids.length - 1].user.name}
+              </div>
+            </>
+          )}
           <Image
             className="rounded-xl"
             src="/item-card.jpg"

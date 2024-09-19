@@ -1,18 +1,43 @@
 "use client";
 
+import { createItemAction } from "@/app/items/create/actions";
+import { DatePickerDemo } from "@/components/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { createItemAction } from "./actions";
 import { pageTitleStyles } from "@/app/styles";
+import { useState } from "react";
 
 export default function CreatePage() {
+  const [date, setDate] = useState<Date | undefined>();
+
   return (
     <main className="space-y-8">
       <h1 className={pageTitleStyles}>Post an Item</h1>
 
       <form
         className="flex flex-col border p-8 rounded-xl space-y-4 max-w-lg"
-        action={createItemAction}
+        onSubmit={async (e) => {
+          e.preventDefault();
+
+          if (!date) {
+            return;
+          }
+
+          const form = e.currentTarget as HTMLFormElement;
+          const formData = new FormData(form);
+
+          const name = formData.get("name") as string;
+          const startingPrice = parseInt(
+            formData.get("startingPrice") as string
+          );
+          const startingPriceInCents = Math.floor(startingPrice * 100);
+
+          await createItemAction({
+            name,
+            startingPrice: startingPriceInCents,
+            endDate: date,
+          });
+        }}
       >
         <Input
           required
@@ -28,6 +53,7 @@ export default function CreatePage() {
           step="0.01"
           placeholder="What to start your auction at"
         />
+        <DatePickerDemo date={date} setDate={setDate} />
         <Button className="self-end" type="submit">
           Post Item
         </Button>
