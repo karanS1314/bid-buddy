@@ -23,15 +23,19 @@ const Navbar: React.FC<{ toggle: () => void }> = ({ toggle }) => {
 
   return (
     <>
-      <div className={"bg-gray-200 py-4 h-20 text-black sticky top-0 z-1000"}>
+      <div
+        className={
+          "bg-gray-200 py-4 h-20 text-black sticky top-0 inset-x-0 z-50"
+        }
+      >
         <div className="container flex justify-between items-center">
           <div className="flex items-center gap-12">
             <Link
               href="/"
               className="font-bold hover:text-gray-800 flex items-center gap-1"
             >
-              <Image src="/logo.webp" width="50" height="50" alt="Logo" />
-              BIDORA
+              <Image src="/logo.png" width="50" height="50" alt="Logo" />
+              Bidora
             </Link>
             <NavMenu className="flex items-center gap-8">
               <Link
