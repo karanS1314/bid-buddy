@@ -1,5 +1,5 @@
 // import ThemeToggle from "./ThemeToggle";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,59 +14,41 @@ import { formatToDollar } from "@/utils/currency";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar: React.FC<{ toggle: () => void }> = ({ toggle }) => {
-  const [scrollnav, setscrollnav] = useState(false);
-
-  const changeNav = () => {
-    if (window.scrollY >= 80) {
-      setscrollnav(true);
-    } else {
-      setscrollnav(false);
-    }
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", changeNav);
-  }, []);
-
   const [isVisible, setIsVisible] = useState(false);
   const notifButtonRef = useRef(null);
   const session = useSession();
 
   const userName = session?.data?.user?.name;
   const userId = session?.data?.user?.id;
+
   return (
     <>
-      <div
-        className={
-          scrollnav
-            ? "bg-black py-4 h-20 text-white sticky top-0"
-            : "bg-gray-200 py-4 h-20 text-black sticky top-0"
-        }
-      >
+      <div className={"bg-gray-200 py-4 h-20 text-black sticky top-0 z-1000"}>
         <div className="container flex justify-between items-center">
           <div className="flex items-center gap-12">
             <Link
               href="/"
-              className="font-bold hover:font-bold flex items-center gap-1"
+              className="font-bold hover:text-gray-800 flex items-center gap-1"
             >
               <Image src="/logo.webp" width="50" height="50" alt="Logo" />
-              Bidora
+              BIDORA
             </Link>
             <NavMenu className="flex items-center gap-8">
               <Link
                 href="/allAuctions"
-                className="hover:font-bold flex items-center gap-1"
+                className="hover:text-gray-800 flex items-center gap-1"
               >
                 All Auctions
               </Link>
               <Link
                 href="/items/create"
-                className="hover:font-bold flex items-center gap-1"
+                className="hover:text-gray-800 flex items-center gap-1"
               >
                 Create Auction
               </Link>
               <Link
                 href="/myAuctions"
-                className="hover:font-bold flex items-center gap-1"
+                className="hover:text-gray-800 flex items-center gap-1"
               >
                 My Auctions
               </Link>
@@ -136,7 +118,7 @@ const Navbar: React.FC<{ toggle: () => void }> = ({ toggle }) => {
               </div>
             </NavMenu>
 
-            <MobileIcon scrollnav={scrollnav} onClick={toggle}>
+            <MobileIcon onClick={toggle}>
               <FaBars />
             </MobileIcon>
           </div>

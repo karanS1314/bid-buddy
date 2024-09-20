@@ -7,7 +7,6 @@ export const MobileIcon = styled.div`
     display: block;
     font-size: 1.5rem;
     cursor: pointer;
-    color: ${({ scrollnav }) => (scrollnav ? "white" : "black")};
   }
 `;
 

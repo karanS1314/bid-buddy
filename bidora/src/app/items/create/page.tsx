@@ -1,6 +1,9 @@
 "use client";
 
-import { createItemAction } from "@/app/items/create/actions";
+import {
+  createItemAction,
+  createUploadUrlAction,
+} from "@/app/items/create/actions";
 import { DatePickerDemo } from "@/components/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +28,14 @@ export default function CreatePage() {
 
           const form = e.currentTarget as HTMLFormElement;
           const formData = new FormData(form);
+          const file = formData.get("file") as File;
+
+          const uploadUrl = await createUploadUrlAction(file.name, file.type);
+
+          await fetch(uploadUrl, {
+            method: "PUT",
+            body: file,
+          });
 
           const name = formData.get("name") as string;
           const startingPrice = parseInt(
@@ -35,6 +46,7 @@ export default function CreatePage() {
           await createItemAction({
             name,
             startingPrice: startingPriceInCents,
+            fileName: file.name,
             endDate: date,
           });
         }}
@@ -53,6 +65,7 @@ export default function CreatePage() {
           step="0.01"
           placeholder="What to start your auction at"
         />
+        <Input type="file" name="file"></Input>
         <DatePickerDemo date={date} setDate={setDate} />
         <Button className="self-end" type="submit">
           Post Item

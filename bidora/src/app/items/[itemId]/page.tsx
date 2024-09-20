@@ -9,6 +9,7 @@ import { getItem } from "@/data-access/items";
 import { getBidsForItem } from "@/data-access/bids";
 import { auth } from "@/auth";
 import { Badge } from "@/components/ui/badge";
+import { getImageUrl } from "@/utils/files";
 
 function formatTimestamp(timestamp: Date) {
   return formatDistance(timestamp, new Date(), { addSuffix: true });
@@ -71,7 +72,7 @@ export default async function ItemPage({
           )}
           <Image
             className="rounded-xl"
-            src="/item-card.jpg"
+            src={getImageUrl(item.fileKey)}
             alt={item.name}
             width={400}
             height={400}

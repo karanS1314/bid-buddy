@@ -1,4 +1,3 @@
-import { timeStamp } from "console";
 import { relations } from "drizzle-orm";
 import {
   integer,
@@ -72,6 +71,7 @@ export const items = pgTable("b_item", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
+  fileKey: text("fileKey").notNull(),
   startingPrice: integer("startingPrice").notNull().default(0),
   currentBid: integer("currentBid").notNull().default(0),
   bidInterval: integer("bidInterval").notNull().default(100),
