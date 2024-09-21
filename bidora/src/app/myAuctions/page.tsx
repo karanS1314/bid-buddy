@@ -5,12 +5,13 @@ import { eq } from "drizzle-orm";
 import { items } from "@/db/schema";
 import { EmptyState } from "./empty-state";
 import { pageTitleStyles } from "../styles";
+import { redirect } from "next/navigation";
 
 export default async function MyAuctionPage() {
   const session = await auth();
 
   if (!session || !session.user) {
-    throw new Error("Unauthorized");
+    redirect("/");
   }
 
   const allItems = await database.query.items.findMany({

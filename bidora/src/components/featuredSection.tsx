@@ -6,7 +6,22 @@ import { useState, useEffect } from "react";
 
 export default function Carousel({ items }: { items: Item[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerSlide = 3;
+  const [itemsPerSlide, setItemsPerSlide] = useState(3);
+
+  useEffect(() => {
+    const updateItemsPerSlide = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerSlide(2); // Show 2 items per slide on small/medium screens
+      } else {
+        setItemsPerSlide(3); // Show 3 items per slide on large screens
+      }
+    };
+
+    updateItemsPerSlide(); // Initial call on load
+    window.addEventListener("resize", updateItemsPerSlide); // Update on window resize
+
+    return () => window.removeEventListener("resize", updateItemsPerSlide);
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex(

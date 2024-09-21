@@ -28,7 +28,7 @@ export function ItemCard({ item }: { item: Item }) {
           <p className="font-bold">Starting price :</p>
           <p>₹{formatToDollar(item.startingPrice)}</p>
           <p className="text-lg">Bidding is Over</p>
-          <Badge className="w-fit" variant="destructive">
+          <Badge variant="destructive">
             Sold for ₹{formatToDollar(item.currentBid)}
           </Badge>
         </>
