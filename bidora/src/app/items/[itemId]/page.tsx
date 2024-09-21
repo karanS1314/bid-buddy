@@ -11,6 +11,16 @@ import { auth } from "@/auth";
 import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/utils/files";
 
+const {
+  NEXT_PUBLIC_RAZORPAY_KEY_ID,
+  // ... other environment variables
+} = process.env;
+
+// Validate environment variables
+if (!NEXT_PUBLIC_RAZORPAY_KEY_ID) {
+  throw new Error("NEXT_PUBLIC_RAZORPAY_KEY_ID is not set");
+}
+
 function formatTimestamp(timestamp: Date) {
   return formatDistance(timestamp, new Date(), { addSuffix: true });
 }
