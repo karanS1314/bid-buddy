@@ -54,8 +54,15 @@ export default function PriceSection() {
           color: "#1976d2",
         },
       };
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
+      if (typeof window.Razorpay === "function") {
+        const RazorpayConstructor = window.Razorpay as unknown as new (
+          options: unknown
+        ) => { open: () => void };
+        const rzp1 = new RazorpayConstructor(options);
+        rzp1.open();
+      } else {
+        throw new Error("Razorpay SDK is not loaded");
+      }
     } catch (error) {
       console.error("Payment failed", error);
     } finally {
