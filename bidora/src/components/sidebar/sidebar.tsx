@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  SidebarContainer,
   Icon,
   CloseIcon,
   SidebarMenu,
@@ -17,7 +16,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
 
   const userName = session?.data?.user?.name;
   return (
-    <SidebarContainer isOpen={isOpen} onClick={toggle}>
+    <div
+      className={`
+      fixed z-[999] w-full h-full bg-[#0d0d0d] transition-all duration-300 ease-in-out
+      ${isOpen ? "block" : "hidden"}
+    `}
+      onClick={toggle}
+    >
       <Icon onClick={toggle}>
         <CloseIcon />
       </Icon>
@@ -63,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
         </div>
       </SidebarMenu>
       {/* </SidebarWrapper> */}
-    </SidebarContainer>
+    </div>
   );
 };
 

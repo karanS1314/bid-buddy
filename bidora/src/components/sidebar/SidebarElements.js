@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 
-export const SidebarContainer = styled.aside`
-  position: fixed;
-  z-index: 999;
-  width: 100%;
-  height: 100%;
-  background: #0d0d0d;
-  transition: 0.3s ease-in-out;
-  display: ${({ isOpen }) => (isOpen ? "100%" : "none")};
-`;
 
 export const CloseIcon = styled(FaTimes)`
   color: #fff;
