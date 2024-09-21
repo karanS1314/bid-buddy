@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -40,10 +41,10 @@ export default function HeroSection() {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                View Auctions
+                <Link href="/allAuctions">View Auctions</Link>
               </Button>
               <Button className="bg-white text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
-                Create Your Auction
+                <Link href="/items/create">Create Your Auction</Link>
               </Button>
             </div>
           </div>

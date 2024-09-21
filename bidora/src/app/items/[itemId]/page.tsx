@@ -70,13 +70,15 @@ export default async function ItemPage({
               <Badge className="w-fit" variant="destructive">
                 Bidding Over
               </Badge>
-              <div>
-                Sold for{" "}
-                <span className="font-bold">
-                  ₹{formatToDollar(item.currentBid)}
-                </span>{" "}
-                to {allBids[allBids.length - 1].user.name}
-              </div>
+              {allBids.length > 0 && (
+                <div>
+                  Sold for{" "}
+                  <span className="font-bold">
+                    ₹{formatToDollar(item.currentBid)}
+                  </span>{" "}
+                  to {allBids[allBids.length - 1]?.user.name}
+                </div>
+              )}
             </>
           )}
           <Image
