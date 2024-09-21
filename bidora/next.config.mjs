@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: process.env.NEXT_PUBLIC_BUCKET_URL,
+        hostname: "pub-28b379abccac4cbaa13449fa98ee4c15.r2.dev",
         protocol: "https",
         port: "",
       },
