@@ -12,7 +12,7 @@ export default function Carousel({ items }: { items: Item[] }) {
       setCurrentIndex(
         (prevIndex) => (prevIndex + 1) % Math.ceil(items.length / itemsPerSlide)
       );
-    }, 1000000000);
+    }, 7000);
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, [items.length]);
@@ -30,7 +30,7 @@ export default function Carousel({ items }: { items: Item[] }) {
         </h2>
       </div>
       <div
-        className="flex transition-transform duration-700 ease-in-out"
+        className="flex transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {getCurrentItems().map((item) => (

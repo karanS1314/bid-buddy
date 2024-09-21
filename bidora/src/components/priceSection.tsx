@@ -111,7 +111,7 @@ export default function PriceSection() {
                 </p>
                 <p className="mt-6 flex items-baseline justify-center gap-x-2">
                   <span className="text-5xl font-bold tracking-tight text-gray-900">
-                    ₹10
+                    ₹100
                   </span>
                   <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
                     INR
