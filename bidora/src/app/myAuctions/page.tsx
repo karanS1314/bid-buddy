@@ -23,7 +23,7 @@ export default async function MyAuctionPage() {
     <main className="space-y-8">
       <h1 className={pageTitleStyles}>Your Current Auctions</h1>
       {hasItems ? (
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-12">
           {allItems.map((item) => (
             <ItemCard key={item.id} item={item} />
           ))}

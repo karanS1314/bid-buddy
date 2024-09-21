@@ -65,8 +65,16 @@ export const verificationTokens = pgTable(
   })
 );
 
+export const premiumUsers = pgTable("b_premiumUser", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+});
+
 export const items = pgTable("b_item", {
   id: serial("id").primaryKey(),
+
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),

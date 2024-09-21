@@ -26,16 +26,16 @@ export function ItemCard({ item }: { item: Item }) {
       {isBidOver(item) ? (
         <>
           <p className="font-bold">Starting price :</p>
-          <p>${formatToDollar(item.startingPrice)}</p>
+          <p>₹{formatToDollar(item.startingPrice)}</p>
           <p className="text-lg">Bidding is Over</p>
           <Badge className="w-fit" variant="destructive">
-            Sold for ${formatToDollar(item.currentBid)}
+            Sold for ₹{formatToDollar(item.currentBid)}
           </Badge>
         </>
       ) : (
         <>
           <p className="font-bold">Current price :</p>
-          <p>${formatToDollar(item.currentBid)}</p>
+          <p>₹{formatToDollar(item.currentBid)}</p>
           <p className="font-bold">Ends On: </p>
           <p>{format(item.endDate, "eeee M/dd/yy")}</p>
         </>

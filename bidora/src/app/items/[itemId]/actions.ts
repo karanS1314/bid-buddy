@@ -66,7 +66,6 @@ export async function createBidAction(itemId: number) {
       bid.userId != userId &&
       !recipients.find((recipient) => recipient.id === bid.userId)
     ) {
-      //userId is the current logged in user here
       recipients.push({
         id: bid.userId + "",
         name: bid.user.name ?? "Anonymous",

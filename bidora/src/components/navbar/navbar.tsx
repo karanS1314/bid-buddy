@@ -1,5 +1,4 @@
-// import ThemeToggle from "./ThemeToggle";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,14 +11,25 @@ import { MobileIcon, NavMenu } from "./NavbarElements";
 import { FaBars } from "react-icons/fa";
 import { formatToDollar } from "@/utils/currency";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { checkPremiumUser } from "@/app/payment/actions";
 
 const Navbar: React.FC<{ toggle: () => void }> = ({ toggle }) => {
   const [isVisible, setIsVisible] = useState(false);
   const notifButtonRef = useRef(null);
   const session = useSession();
-
+  const [isPremiumUser, setIsPremiumUser] = useState(false);
   const userName = session?.data?.user?.name;
   const userId = session?.data?.user?.id;
+
+  useEffect(() => {
+    async function fetchPremiumStatus() {
+      const isPremium = await checkPremiumUser();
+      setIsPremiumUser(isPremium);
+    }
+    if (userId) {
+      fetchPremiumStatus();
+    }
+  }, [userId]);
 
   return (
     <>
@@ -102,7 +112,13 @@ const Navbar: React.FC<{ toggle: () => void }> = ({ toggle }) => {
               ></Image>
             )}
             <NavMenu className="flex items-center gap-8">
-              <div>{session.data?.user.name}</div>
+              <div
+                className={
+                  isPremiumUser ? "bg-green-200 px-2 py-1 rounded-md" : ""
+                }
+              >
+                {session.data?.user.name}
+              </div>
               <div>
                 {userName ? (
                   <Button

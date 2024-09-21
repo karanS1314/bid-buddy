@@ -20,7 +20,6 @@ export default async function ItemPage({
   params: { itemId: string };
 }) {
   const session = await auth();
-
   const item = await getItem(parseInt(itemId));
 
   if (!item) {
@@ -50,7 +49,7 @@ export default async function ItemPage({
 
   return (
     <main className="space-y-8">
-      <div className="flex gap-8">
+      <div className="flex flex-col md:flex-row gap-8">
         <div>
           <h1 className={pageTitleStyles}>
             <span className="font-normal">Auction for </span>
@@ -64,7 +63,7 @@ export default async function ItemPage({
               <div>
                 Sold for{" "}
                 <span className="font-bold">
-                  ${formatToDollar(item.currentBid)}
+                  ₹{formatToDollar(item.currentBid)}
                 </span>{" "}
                 to {allBids[allBids.length - 1].user.name}
               </div>
@@ -74,26 +73,26 @@ export default async function ItemPage({
             className="rounded-xl"
             src={getImageUrl(item.fileKey)}
             alt={item.name}
-            width={400}
-            height={400}
+            width={300}
+            height={300}
           />
           <div className="text-xl space-y-4">
             <div>
               Current Bid{" "}
               <span className="font-bold">
-                ${formatToDollar(item.currentBid)}
+                ₹{formatToDollar(item.currentBid)}
               </span>
             </div>
             <div>
               Starting Price of{" "}
               <span className="font-bold">
-                ${formatToDollar(item.startingPrice)}
+                ₹{formatToDollar(item.startingPrice)}
               </span>
             </div>
             <div>
               Bid Interval{" "}
               <span className="font-bold">
-                ${formatToDollar(item.bidInterval)}
+                ₹{formatToDollar(item.bidInterval)}
               </span>
             </div>
           </div>
@@ -116,7 +115,7 @@ export default async function ItemPage({
                     <div className="flex gap-4">
                       <div>
                         <span className="font-bold">
-                          ${formatToDollar(bid.amount)}
+                          ₹{formatToDollar(bid.amount)}
                         </span>{" "}
                         by <span className="font-bold">{bid.user.name}</span>
                       </div>
