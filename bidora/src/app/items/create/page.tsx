@@ -12,6 +12,7 @@ import { useState } from "react";
 
 export default function CreatePage() {
   const [date, setDate] = useState<Date | undefined>();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   return (
     <main className="space-y-8">
@@ -22,6 +23,7 @@ export default function CreatePage() {
         onSubmit={async (e) => {
           e.preventDefault();
 
+          setIsProcessing(true);
           if (!date) {
             return;
           }
@@ -49,6 +51,7 @@ export default function CreatePage() {
             fileName: file.name,
             endDate: date,
           });
+          setIsProcessing(false);
         }}
       >
         <Input
@@ -67,8 +70,8 @@ export default function CreatePage() {
         />
         <Input type="file" name="file"></Input>
         <DatePickerDemo date={date} setDate={setDate} />
-        <Button className="self-end" type="submit">
-          Post Item
+        <Button className="self-end" type="submit" disabled={isProcessing}>
+          {isProcessing ? "Processing..." : "Post Item"}
         </Button>
       </form>
     </main>

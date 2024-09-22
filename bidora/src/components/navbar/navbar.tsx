@@ -35,7 +35,7 @@ const Navbar: React.FC<{ toggle: () => void }> = ({ toggle }) => {
     <>
       <div
         className={
-          "bg-gray-200 py-1 h-16 text-black sticky top-0 inset-x-0 z-50"
+          "bg-white/30 backdrop-blur-3xl py-1 h-16 text-black sticky top-0 inset-x-0 z-50"
         }
       >
         <div className="container flex justify-between items-center">

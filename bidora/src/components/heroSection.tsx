@@ -1,12 +1,17 @@
 "use client";
 
+// import { auth, signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export default function HeroSection() {
+  const session = useSession();
+
   return (
     <div className="bg-white ">
-      <div className="relative isolate px-6 pt-10 sm:pt-14 lg:px-8">
+      <div className="relative isolate px-6 pt-8 sm:pt-14 lg:px-8">
         <div
           aria-hidden="true"
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -40,9 +45,18 @@ export default function HeroSection() {
               discover amazing deals!
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                <Link href="/allAuctions">View Auctions</Link>
-              </Button>
+              {session.data?.user ? (
+                <Button className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  View Auctions
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => signIn()}
+                  className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Get Started
+                </Button>
+              )}
               <Button className="bg-white text-sm font-semibold border border-gray-300 rounded-md leading-6 text-gray-900 hover:bg-gray-100">
                 <Link href="/items/create">Create Your Auction</Link>
               </Button>
