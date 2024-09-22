@@ -43,7 +43,7 @@ export default function HeroSection() {
               <Button className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 <Link href="/allAuctions">View Auctions</Link>
               </Button>
-              <Button className="bg-white text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
+              <Button className="bg-white text-sm font-semibold border border-gray-300 rounded-md leading-6 text-gray-900 hover:bg-gray-100">
                 <Link href="/items/create">Create Your Auction</Link>
               </Button>
             </div>
