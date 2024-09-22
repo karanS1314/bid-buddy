@@ -32,7 +32,10 @@ export async function createBidAction(itemId: number) {
     throw new Error("This auction is already over");
   }
 
-  const latestBidValue = item.currentBid + item.bidInterval;
+  const latestBidValue =
+    item.currentBid == 0
+      ? item.startingPrice + item.bidInterval
+      : item.currentBid + item.bidInterval;
 
   await database.insert(bids).values({
     amount: latestBidValue,
@@ -89,8 +92,24 @@ export async function createBidAction(itemId: number) {
       },
     });
   }
-
-  // send notifications to everyone else on this item who has placed a bid
-
   revalidatePath(`/items/${item.id}`);
+}
+
+export async function isItemSold(itemId: number) {
+  const item = await database.query.items.findFirst({
+    where: eq(items.id, itemId),
+  });
+
+  if (!item) {
+    throw new Error("Item not found");
+  }
+
+  const isBiddingOver = item.endDate < new Date();
+  if (isBiddingOver) {
+    if (item.currentBid >= item.startingPrice) {
+      return true;
+    }
+    return false;
+  }
+  return false;
 }

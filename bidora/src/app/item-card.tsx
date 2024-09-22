@@ -5,11 +5,11 @@ import { isBidOver } from "@/utils/bids";
 import { formatToDollar } from "@/utils/currency";
 import { format } from "date-fns";
 import { getImageUrl } from "@/utils/files";
-
 import Image from "next/image";
 import Link from "next/link";
 
 export function ItemCard({ item }: { item: Item }) {
+  const isSold = item.currentBid >= item.startingPrice;
   return (
     <div
       key={item.id}
@@ -28,9 +28,13 @@ export function ItemCard({ item }: { item: Item }) {
           <p className="font-bold">Starting price :</p>
           <p>₹{formatToDollar(item.startingPrice)}</p>
           <p className="text-lg">Bidding is Over</p>
-          <Badge variant="destructive">
-            Sold for ₹{formatToDollar(item.currentBid)}
-          </Badge>
+          {isSold ? (
+            <Badge variant="destructive">
+              Sold for ₹{formatToDollar(item.currentBid)}
+            </Badge>
+          ) : (
+            <Badge variant="secondary">Unsold</Badge>
+          )}
         </>
       ) : (
         <>

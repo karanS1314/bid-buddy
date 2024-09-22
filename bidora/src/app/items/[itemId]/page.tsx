@@ -11,16 +11,6 @@ import { auth } from "@/auth";
 import { Badge } from "@/components/ui/badge";
 import { getImageUrl } from "@/utils/files";
 
-const {
-  NEXT_PUBLIC_RAZORPAY_KEY_ID,
-  // ... other environment variables
-} = process.env;
-
-// Validate environment variables
-if (!NEXT_PUBLIC_RAZORPAY_KEY_ID) {
-  throw new Error("NEXT_PUBLIC_RAZORPAY_KEY_ID is not set");
-}
-
 function formatTimestamp(timestamp: Date) {
   return formatDistance(timestamp, new Date(), { addSuffix: true });
 }
@@ -70,7 +60,7 @@ export default async function ItemPage({
               <Badge className="w-fit" variant="destructive">
                 Bidding Over
               </Badge>
-              {allBids.length > 0 && (
+              {allBids.length > 0 ? (
                 <div>
                   Sold for{" "}
                   <span className="font-bold">
@@ -78,6 +68,8 @@ export default async function ItemPage({
                   </span>{" "}
                   to {allBids[allBids.length - 1]?.user.name}
                 </div>
+              ) : (
+                <div>Unsold </div>
               )}
             </>
           )}

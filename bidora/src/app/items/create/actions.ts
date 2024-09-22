@@ -52,7 +52,7 @@ export async function createItemAction({
     name,
     startingPrice,
     fileKey: fileName,
-    currentBid: startingPrice,
+    currentBid: 0,
     userId: user.id,
     endDate,
   });
